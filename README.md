@@ -1,8 +1,8 @@
-# function-finder!
+# function-finder! 🔎🔎🔎
 
-This repo is my first attempt at rust.
+This repo is my first attempt at rust. 🦀
 
-In my job over the summer, I find it hard to keep track of where all my functions are called, so I'm taking it upon myself to create some sort of executeable / extension that will find all times a function is called, and display information about them.
+In my job over the summer, I find it hard to keep track of where all my functions are called, so I'm taking it upon myself to create some sort of executeable / extension that will find all times a function is called, and display information about them. Not entirely sure yet how this will be executed or how far I will go with it, but the project is still in its infancy.
 
 Ideas:
 ```
