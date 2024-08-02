@@ -1,13 +1,18 @@
-use std::fs;
-use std::io::Result;
+mod read;
+mod helpers;
 
+use std::io::Result;
+use helpers::out;
+use read::{read_lines, Line};
 
 
 fn main() -> Result<()> {
-    let filename = "../testfiles/test.js";
-    let contents = fs::read_to_string(filename)?;
+    let filename = "test";
+    let result: Vec<Line> = read_lines(filename, "greet")?;
 
-    println!("{}", contents);
+    for line in result {
+        
+    }
 
 
 
