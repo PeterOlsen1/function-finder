@@ -14,6 +14,10 @@ Parsing
   -Use multithreading for faster fileIO
     -Start single threaded, figure out the basics first
   -Parse files until we find 'function ____()'
-    -Start with explicitly defined function since anything more would probably be too much at the moment
+    -Start with functions defined by 'function'
+    -See later about:
+      -Commented lines
+      -Arrow functions assigned to values
+      -Lines contained in strings  
 ```
 
