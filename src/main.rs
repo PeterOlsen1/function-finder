@@ -1,20 +1,13 @@
-mod read;
-mod helpers;
+mod finders;
+mod utils;
 
 use std::io::Result;
-use helpers::out;
-use read::{read_lines, Line};
+use finders::find_single;
 
 
 fn main() -> Result<()> {
     let filename = "test";
-    let result: Vec<Line> = read_lines(filename, "greet")?;
-
-    for line in result {
-        
-    }
-
-
+    find_single(filename, "add");
 
     Ok(())
 }
