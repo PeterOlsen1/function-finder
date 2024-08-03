@@ -8,6 +8,7 @@ Ideas:
 ```
 Interfacing
   -Allow users to pass in a function name and filename through CLI interface
+    -Use crate::clap for CLI parsing
     -If no arguments are found, list all functions?
     -If the function name is close to one found,
 Parsing
@@ -18,6 +19,6 @@ Parsing
     -See later about:
       -Commented lines
       -Arrow functions assigned to values
-      -Lines contained in strings  
+      -Calls contained in strings  
 ```
 
