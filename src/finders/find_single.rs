@@ -37,7 +37,7 @@ pub fn find_single(filename: &str, name: &str) -> Result<()> {
 
     println!("\n===== FUNCTION CALLS =====");
     if result.1.len() == 0 {
-        println!("This function has not been called yet");
+        println!("This function has not been called yet.");
     }
     else {
         for call in result.1 {
@@ -52,7 +52,7 @@ pub fn find_single(filename: &str, name: &str) -> Result<()> {
 
 fn read_single_function(filename : &str, name: &str) -> Result<(Vec<Definition>, Vec<Call>)> {
     //get the filename and open file
-    let path = &format!("./testfiles/{}.js", filename);
+    let path = &format!("./testfiles/{}", filename);
     let f = fs::File::open(path.clone())?;
     
     //initialize file reader, increment variable, and line store
