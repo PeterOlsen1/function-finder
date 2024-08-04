@@ -1,7 +1,42 @@
+use clap::{Arg, Command};
+
 /**
- * The purpose of this module is to provide single line parsers to extract data or 
+ * The purpose of this module is to provide single line parsers to extract data 
  */
 
+//======================================================================
+//Command line parser
+
+pub struct CliParser {
+    pub parser: Command
+}
+
+impl CliParser {
+    pub fn new() -> Self {
+        CliParser {
+            parser: Command::new("function-finder")
+                .version("1.0")
+                .author("Author Name: Peter Olsen")
+                .about("Does awesome things")
+                .arg(
+                    Arg::new("input")
+                    .short('i')
+                    .long("input")
+                )
+                .arg(
+                    Arg::new("debug")
+                    .short('d')
+                    .long("debug")
+                )
+        }
+    }
+}
+
+
+
+
+//======================================================================
+//Line parsers
 
 /**
  * @purpose - Helper function to parse the arguments of a function signature
