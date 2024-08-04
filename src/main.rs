@@ -4,9 +4,13 @@ mod utils;
 use std::io::Result;
 use finders::{find_all_definitions, find_single};
 use std::env;
+use utils::parsers::CliParser;
 
 
 fn main() -> Result<()> {
+    let parser = utils::parsers::CliParser::new().parser;
+    let matches = parser.get_matches();
+    
     let args: Vec<String> = env::args().collect();
 
 
