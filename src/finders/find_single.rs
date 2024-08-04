@@ -1,5 +1,5 @@
 use crate::utils::types::{Call, Definition};
-use crate::utils::parsers::{parse_name, parse_params};
+use crate::utils::parsers::{parse_name, parse_params, parse_valid_function};
 use std::fs;
 use std::io::{self, BufRead, Result};
 
@@ -18,18 +18,19 @@ pub fn find_single(filename: &str, name: &str) -> Result<()> {
     else if result.0.len() == 1 {
         let function = &result.0[0];
         println!("One function definition found: ");
-        println!("  Defined in: {} on line {}", function.filename, function.idx);
-        println!("  Parameters: {}", function.params.join(","));
+        println!("  Defined in: '{}' on line {}", function.filename, function.idx);
+        println!("  Parameters: ({})", function.params.join(","));
     }
     else {
+        //unlikely but possible
         println!("Multiple definitions found!");
 
         let mut i: i8 = 1;
         for function in result.0 {
             println!("Function: {}", function.name);
             println!("Function number {}", i);
-            println!("  Defined in: {} on line {}", function.filename, function.idx);
-            println!("  Parameters: {}", function.params.join(","));
+            println!("  Defined in: '{}' on line {}", function.filename, function.idx);
+            println!("  Parameters: ({})", function.params.join(","));
 
             i += 1;
         }   
@@ -41,7 +42,7 @@ pub fn find_single(filename: &str, name: &str) -> Result<()> {
     }
     else {
         for call in result.1 {
-            println!("Called: {} on line {}", call.filename, call.idx);
+            println!("Called: '{}' on line {}", call.filename, call.idx);
             println!("Call: {}\n", call.content);
         }
     }
@@ -69,25 +70,24 @@ fn read_single_function(filename : &str, name: &str) -> Result<(Vec<Definition>,
 
         //parse the line
         if has_function(line, name) {
-            //check if the line is a function definition
-            if line.contains("function") && !line.contains("//") {
+            if parse_valid_function(&line) {
                 //gather parts of the line
                 let parts: Vec<&str> = line
                     .split("function")
                     .collect();
                 let replaced = parts[1]
                     .replace("{", "");
-                let signature = replaced.trim();
+                let definition = replaced.trim();
 
                 defs.push(Definition {
                     content:  String::from(&replaced),
-                    name: parse_name(signature),
+                    name: parse_name(definition),
                     idx: i,
-                    params: parse_params(signature),
+                    params: parse_params(definition),
                     filename: String::from(path)
                 });
             }
-            else {
+            else if !line.contains("//") {
                 //push the line to our store of lines
                 lines.push(Call {
                     filename : String::from(path),
