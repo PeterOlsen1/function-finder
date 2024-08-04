@@ -14,7 +14,7 @@ use std::io::{self, BufRead, Result};
 
 pub fn find_all_definitions(filename: &str) -> Result<()> {
     let result = all_definitions(filename);
-    println!("===== RESULTS OF all_definitions IN {} =====", filename);
+    println!("===== RESULTS OF find_all_definitions IN {} =====", filename);
 
     //check the result of the option type
     match result {
@@ -48,8 +48,8 @@ pub fn find_all_definitions(filename: &str) -> Result<()> {
 fn all_definitions(filename: &str) -> Option<Vec<Definition>> {
 
     //get path and open file
-    let path = &format!("./testfiles/{}", filename);
-    let f = fs::File::open(path.clone()).ok()?;
+    let path = format!("./testfiles/{}", filename);
+    let f = fs::File::open(&path).ok()?;
     
     //initialize file reader, increment variable, and line store
     let reader = io::BufReader::new(f);
@@ -68,19 +68,19 @@ fn all_definitions(filename: &str) -> Option<Vec<Definition>> {
             let replaced = parts[1]
                 .replace("{", "");
 
-            parse_valid_function(&line);
             //push to defs
             defs.push(Definition {
                 content:  String::from(&replaced),
                 name: parse_name(&line),
                 idx: i,
                 params: parse_params(&line),
-                filename: String::from(path)
+                filename: String::from(&path)
             });
         }
     }
 
-    if (defs.len() > 0) {
+    //return option depending on how many functions are present
+    if defs.len() > 0 {
         return Some(defs);
     }
     None

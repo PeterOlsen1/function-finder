@@ -36,6 +36,7 @@ pub fn find_single(filename: &str, name: &str) -> Result<()> {
         }   
     }
 
+    //print out all calls to the function
     println!("\n===== FUNCTION CALLS =====");
     if result.1.len() == 0 {
         println!("This function has not been called yet.");
@@ -53,8 +54,8 @@ pub fn find_single(filename: &str, name: &str) -> Result<()> {
 
 fn read_single_function(filename : &str, name: &str) -> Result<(Vec<Definition>, Vec<Call>)> {
     //get the filename and open file
-    let path = &format!("./testfiles/{}", filename);
-    let f = fs::File::open(path.clone())?;
+    let path = format!("./testfiles/{}", filename);
+    let f = fs::File::open(&path)?;
     
     //initialize file reader, increment variable, and line store
     let reader = io::BufReader::new(f);
@@ -84,13 +85,13 @@ fn read_single_function(filename : &str, name: &str) -> Result<(Vec<Definition>,
                     name: parse_name(definition),
                     idx: i,
                     params: parse_params(definition),
-                    filename: String::from(path)
+                    filename: String::from(&path)
                 });
             }
             else if !line.contains("//") {
                 //push the line to our store of lines
                 lines.push(Call {
-                    filename : String::from(path),
+                    filename : String::from(&path),
                     content: String::from(line),
                     idx: i
                 });

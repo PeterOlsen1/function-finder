@@ -2,12 +2,18 @@ mod finders;
 mod utils;
 
 use std::io::Result;
-use finders::find_single;
+use finders::{find_all_definitions, find_single};
 use std::env;
 
 
 fn main() -> Result<()> {
     let args: Vec<String> = env::args().collect();
+
+
+    // let _result = find_all_definitions("test.js");
+    // let _result = find_all_definitions("nofunctions.js");
+    let _result = find_all_definitions("onefunction.js");
+
 
     //two extra arguments, filename and function to find?
     //or also maybe unsupported features so far
@@ -19,9 +25,6 @@ fn main() -> Result<()> {
             _ => println!("End of the pattern"),
         }
     }
-
-    // let filename = "test";
-    // find_single(filename, "add");
 
     Ok(())
 }

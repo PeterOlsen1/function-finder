@@ -1,10 +1,17 @@
 use std::collections::VecDeque;
 
+/**
+ * Type to store function calls
+ */
 pub struct Call {
     pub filename: String,
     pub content: String,
     pub idx: u16
 }
+
+/**
+ * Type to store function definitions
+ */
 #[derive(Debug)]
 pub struct Definition {
     pub content: String,
@@ -14,7 +21,7 @@ pub struct Definition {
     pub filename: String
 }
 
-
+//use this queue later to find {} corresponding to a function?
 pub struct Queue<T> {
     elements: VecDeque<T>,
 }

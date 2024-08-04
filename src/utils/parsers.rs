@@ -21,12 +21,14 @@ pub fn parse_params(line: &str) -> Vec<String> {
         .find(')')
         .expect("Couldn't Find Second Parenthesis");
 
+    //slice the string between parenthesis
     let param_string: &str = &signature[first_parenthesis + 1..second_parenthesis];
     let params: Vec<String> = param_string
         .split(',')
         .map(|s| s.trim().to_string())
         .collect();
 
+    //return the list of parameters
     params
 }
 
@@ -45,6 +47,7 @@ pub fn parse_name(line: &str) -> String {
         .map(|s| s.trim().to_string())
         .collect();
 
+    //return the name
     split_line[0].clone()
 }
 
