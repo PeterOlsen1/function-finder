@@ -26,28 +26,28 @@ impl CliParser {
                     Arg::new("file")
                     .short('f')
                     .long("filename")
-                    .help("Specify what file to search")
+                    .help("Specify what JavaScript file to search for. Must have the .js extension.")
                 )
                 .arg(
                     Arg::new("function_name")
                     .short('n')
                     .long("name")
-                    .help("The function to search for")
+                    .help("The function to search for. No need to specify params.")
                 )
                 .arg(
                     Arg::new("directory")
                         .short('d')
                         .long("directory")
-                        .help("Choose a directory to search")
+                        .help("Choose a directory to search for search type.")
                 )
                 .arg(
                     Arg::new("type")
                         .short('t')
                         .long("type")
-                        .help("Choose a type to display results for.
-                            \nA / ALL: Show function declarations and calls (default)
-                            \nF / FUNCTIONS: Show function declarations
-                            \nC / CALLS: Show only function calls")
+                        .help("Choose a type to display results for:
+    A / ALL: Show function declarations and calls (default)
+    F / FUNCTIONS: Show function declarations
+    C / CALLS: Show only function calls")
                 ),
             filename: None,
             function: None,
