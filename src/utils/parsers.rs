@@ -1,4 +1,4 @@
-use clap::{Arg, Command};
+use clap::{builder::Str, Arg, Command};
 
 /**
  * The purpose of this module is to provide single line parsers to extract data 
@@ -8,7 +8,11 @@ use clap::{Arg, Command};
 //Command line parser
 
 pub struct CliParser {
-    pub parser: Command
+    pub parser: Command,
+    pub filename: Option<String>,
+    pub function: Option<String>,
+    pub directory: Option<String>,
+    pub show_type: Option<String>
 }
 
 impl CliParser {
@@ -19,15 +23,36 @@ impl CliParser {
                 .author("Author Name: Peter Olsen")
                 .about("Does awesome things")
                 .arg(
-                    Arg::new("input")
-                    .short('i')
-                    .long("input")
+                    Arg::new("file")
+                    .short('f')
+                    .long("filename")
+                    .help("Specify what file to search")
                 )
                 .arg(
-                    Arg::new("debug")
-                    .short('d')
-                    .long("debug")
+                    Arg::new("function_name")
+                    .short('n')
+                    .long("name")
+                    .help("The function to search for")
                 )
+                .arg(
+                    Arg::new("directory")
+                        .short('d')
+                        .long("directory")
+                        .help("Choose a directory to search")
+                )
+                .arg(
+                    Arg::new("type")
+                        .short('t')
+                        .long("type")
+                        .help("Choose a type to display results for.
+                            \nA / ALL: Show function declarations and calls (default)
+                            \nF / FUNCTIONS: Show function declarations
+                            \nC / CALLS: Show only function calls")
+                ),
+            filename: None,
+            function: None,
+            directory: None,
+            show_type: None
         }
     }
 }
