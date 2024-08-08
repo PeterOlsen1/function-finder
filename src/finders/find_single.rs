@@ -81,7 +81,7 @@ fn read_single_function(filename : &str, name: &str) -> Result<(Vec<Definition>,
                 let definition = replaced.trim();
 
                 defs.push(Definition {
-                    content:  String::from(&replaced),
+                    content:  String::from(replaced.trim()),
                     name: parse_name(definition),
                     idx: i,
                     params: parse_params(definition),
