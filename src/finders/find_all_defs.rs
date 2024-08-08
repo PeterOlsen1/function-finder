@@ -45,10 +45,9 @@ pub fn find_all_definitions(filename: &str) -> Result<()> {
     Ok (())
 }
 
-fn all_definitions(filename: &str) -> Option<Vec<Definition>> {
-
+pub fn all_definitions(filename: &str) -> Option<Vec<Definition>> {
     //get path and open file
-    let path = format!("./testfiles/{}", filename);
+    let path = format!("{}", filename);
     let f = fs::File::open(&path).ok()?;
     
     //initialize file reader, increment variable, and line store
@@ -70,7 +69,7 @@ fn all_definitions(filename: &str) -> Option<Vec<Definition>> {
 
             //push to defs
             defs.push(Definition {
-                content:  String::from(&replaced),
+                content:  String::from(replaced.trim()),
                 name: parse_name(&line),
                 idx: i,
                 params: parse_params(&line),
