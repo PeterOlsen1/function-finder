@@ -12,6 +12,7 @@ pub struct Call {
 /**
  * Type to store function definitions
  */
+#[derive(Debug)]
 pub struct Definition {
     pub content: String,
     pub name: String,
