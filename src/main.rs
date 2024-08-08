@@ -2,7 +2,7 @@ mod finders;
 mod utils;
 
 use std::io::Result;
-use finders::{find_all_definitions, find_single};
+use finders::{find_all_definitions, find_all_directory::{self, find_all_directory}, find_single};
 use utils::parsers::CliParser;
 
 
@@ -20,7 +20,7 @@ fn main() -> Result<()> {
     }
 
     //function
-    if let Some(function) = matches.get_one::<String>("function") {
+    if let Some(function) = matches.get_one::<String>("function_name") {
         cli_parser.function = Some(String::from(function));
     } else {
         cli_parser.function = None;
@@ -33,7 +33,8 @@ fn main() -> Result<()> {
         cli_parser.directory = None;
     }
     
-    //
+    let result = find_all_directory("./testfiles/");
+    dbg!(result);
 
 
     Ok(())
