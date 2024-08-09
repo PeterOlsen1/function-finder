@@ -13,7 +13,10 @@ New Parsers:
         -Or do we want it to only find functions defined in the scope of the parser?
     -Parser to find all in a directory / subdirectories
         -How do we want to display it?
-            -Group by filename
+Currently working:
+    -finish parse_line to remove the need to a bunch of parsers
+    -return a Definition
+        -Add async / export flags to the definition struct
 ```
 Ideas:
 ```
@@ -30,6 +33,8 @@ Interfacing
         -If the function name is close to one found, do stuff?
             -This may be harder
 Parsing
+    -Add support for export and async?
+        -Possible new parts of Definition type that specify it is an export or async
     -Use multithreading for faster fileIO
         -Start single threaded, figure out the basics first
     -Parse files until we find 'function ____()'
