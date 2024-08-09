@@ -151,11 +151,14 @@ pub fn parse_valid_function(line: &str) -> bool {
 /**
  * General fucntion to parse
  * 
- * Better than O(n)?
- *      -This would be nice since I want to use this on every line of each file
+ * Best case O(1)
+ *      -The line length is less than 8 (can't contain a function)
+ *      -Line starts with * or //
+ * Worst case O(n)
+ *      -We have to split the line and parse it
  */
-pub fn parse_line(line: &str, idx: i16, filename: &str) -> Option<()> {
-    if line.starts_with('*') || line.starts_with("//") {
+pub fn parse_line(line: &str, idx: u16, filename: &str) -> Option<Definition> {
+    if line.len() < 8 || line.starts_with('*') || line.starts_with("//") {
         return None;
     }
 
@@ -163,11 +166,12 @@ pub fn parse_line(line: &str, idx: i16, filename: &str) -> Option<()> {
         .into_iter()
         .collect();
 
-    //function_split[0] will be empty if no text comes before 'function'
-    if function_split[0].is_empty() {
-        return Some (());
-    }
-    else if function_split.len() == 1 {
+    // //function_split[0] will be empty if no text comes before 'function'
+    // if function_split[0].is_empty() {
+    //     dbg!("function is the first word");
+    //     // return Some (();
+    // }
+    if function_split.len() == 1 {
         //check for arrow function here?
         if line.contains("=>") {
             dbg!("Arrow function detected!");
@@ -194,8 +198,26 @@ pub fn parse_line(line: &str, idx: i16, filename: &str) -> Option<()> {
         if part.contains("export") {
             export_flag = true;
         }
-    }
+
+        dbg!(&function_split[1]);
+        let content = function_split[1]
+            .replace("{", "");
+        let content = content
+            .trim();
+
+        let first_parenthesis = content.find('(').unwrap();
+        let signature = &content[0..first_parenthesis];
+        let params = &content[first_parenthesis..content.len()];
+
+        return Some (Definition {
+            content: String::from(content),
+            name: String::from(signature),
+            idx: idx,
+            params: parse_params(line),
+            filename: String::from(filename)
+        })
+    } 
 
 
-    Some (())
+    None
 }
