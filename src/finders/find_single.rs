@@ -7,7 +7,7 @@ use std::io::{self, BufRead, Result};
  * @purpose - Calls read_single_function and then displays the results accordingly.
  */
 pub fn show_single(filename: &str, name: &str) -> Result<()> {
-    let result: (Vec<Definition>, Vec<Call>) = read_single_function(filename, name)?;
+    let result: (Vec<Definition>, Vec<Call>) = read_single_function(filename, name).unwrap();
 
     println!("===== RESULTS OF show_single FOR FUNCTION {} IN FILE {} =====", name, filename);
     //only one definition
@@ -52,10 +52,10 @@ pub fn show_single(filename: &str, name: &str) -> Result<()> {
 }
 
 
-fn read_single_function(filename : &str, name: &str) -> Result<(Vec<Definition>, Vec<Call>)> {
+fn read_single_function(filename : &str, name: &str) -> Option<(Vec<Definition>, Vec<Call>)> {
     //get the filename and open file
     let path = format!("./testfiles/{}", filename);
-    let f = fs::File::open(&path)?;
+    let f = fs::File::open(&path).ok()?;
     
     //initialize file reader, increment variable, and line store
     let reader = io::BufReader::new(f);
@@ -67,7 +67,7 @@ fn read_single_function(filename : &str, name: &str) -> Result<(Vec<Definition>,
     for line in reader.lines() {
         //increment line# and create line variable
         i += 1;
-        let line = &line?;
+        let line = &line.ok()?;
 
         //parse the line
         if has_function(line, name) {
@@ -100,7 +100,7 @@ fn read_single_function(filename : &str, name: &str) -> Result<(Vec<Definition>,
     }
 
     //set the components of result and return it
-    Ok((defs, lines))
+    Some((defs, lines))
 }
 
 //function to parse a line, maybe return a line option?
