@@ -6,10 +6,10 @@ use std::io::{self, BufRead, Result};
 /**
  * @purpose - Calls read_single_function and then displays the results accordingly.
  */
-pub fn find_single(filename: &str, name: &str) -> Result<()> {
+pub fn show_single(filename: &str, name: &str) -> Result<()> {
     let result: (Vec<Definition>, Vec<Call>) = read_single_function(filename, name)?;
 
-    println!("===== RESULTS OF find_single FOR FUNCTION {} IN FILE {} =====", name, filename);
+    println!("===== RESULTS OF show_single FOR FUNCTION {} IN FILE {} =====", name, filename);
     //only one definition
     if result.0.len() == 0 {
         println!("No function definitions found...");
