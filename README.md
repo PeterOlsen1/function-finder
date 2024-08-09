@@ -6,8 +6,6 @@ In my job over the summer, I find it hard to keep track of where all my function
 
 TODO:
 ```
-Standardization
-    -Return an option in read_single_function?
 New Parsers:
     -Parser to find all function calls in a file (regardless of where it was defined)
         -Or do we want it to only find functions defined in the scope of the parser?
@@ -17,6 +15,8 @@ Currently working:
     -finish parse_line to remove the need to a bunch of parsers
     -return a Definition
         -Add async / export flags to the definition struct
+Finders:
+    Make other finders use parse_line
 ```
 Ideas:
 ```
