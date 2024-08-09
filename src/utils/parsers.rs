@@ -1,5 +1,7 @@
 use clap::{builder::Str, Arg, Command};
 
+use super::types::Definition;
+
 /**
  * The purpose of this module is to provide single line parsers to extract data 
  */
@@ -143,4 +145,57 @@ pub fn parse_valid_function(line: &str) -> bool {
             false
         }
     }
+}
+
+
+/**
+ * General fucntion to parse
+ * 
+ * Better than O(n)?
+ *      -This would be nice since I want to use this on every line of each file
+ */
+pub fn parse_line(line: &str, idx: i16, filename: &str) -> Option<()> {
+    if line.starts_with('*') || line.starts_with("//") {
+        return None;
+    }
+
+    let function_split: Vec<&str> = line.split("function")
+        .into_iter()
+        .collect();
+
+    //function_split[0] will be empty if no text comes before 'function'
+    if function_split[0].is_empty() {
+        return Some (());
+    }
+    else if function_split.len() == 1 {
+        //check for arrow function here?
+        if line.contains("=>") {
+            dbg!("Arrow function detected!");
+        }
+        return None;
+    }
+    else {
+        //case where there are things before 'function', we need to check 'em
+        let part = function_split[0];
+
+        //check if there are an even number of quotation marks
+        if part.chars().filter(|&c| c == '\'' || c == '"').count() % 2 != 0 {
+            return None;
+        }
+
+        //check for async
+        let mut async_flag = false;
+        if part.contains("async") {
+            async_flag = true;
+        }
+
+        //check for export
+        let mut export_flag = false;
+        if part.contains("export") {
+            export_flag = true;
+        }
+    }
+
+
+    Some (())
 }
