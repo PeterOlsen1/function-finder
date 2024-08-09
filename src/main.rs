@@ -2,8 +2,8 @@ mod finders;
 mod utils;
 
 use std::io::Result;
-use finders::{find_all_definitions, find_all_directory::{self, find_all_directory}, find_single};
-use utils::parsers::CliParser;
+use finders::{find_all_definitions, find_all_directory::{self, find_all_directory, find_all_directory_rec}, show_single};
+use utils::parsers::{CliParser, parse_line};
 
 
 fn main() -> Result<()> {
@@ -33,8 +33,10 @@ fn main() -> Result<()> {
         cli_parser.directory = None;
     }
     
-    let result = find_all_directory("./testfiles/");
-    dbg!(result);
+    // let result = parse_line("OOK_AT_ME(HELLO, LOOK, HERE, HI) {", 1, "./testfiles/folder/superfolder/woah.js");
+    let result = parse_line("function LOOK_AT_ME(HELLO, LOOK, HERE, HI) {", 1, "./testfiles/folder/superfolder/woah.js");
+    let result = parse_line("async function LOOK_AT_ME(HELLO, LOOK, HERE, HI) {", 1, "./testfiles/folder/superfolder/woah.js");
+    // dbg!(result);
 
 
     Ok(())
