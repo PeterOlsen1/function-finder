@@ -35,8 +35,8 @@ Interfacing
 Parsing
     -Add support for export and async?
         -Possible new parts of Definition type that specify it is an export or async
-    -Use multithreading for faster fileIO
-        -Start single threaded, figure out the basics first
+    -Line parser
+        -Sort the line into a tree structure?
     -Parse files until we find 'function ____()'
         -Start with functions defined by 'function'
         -See later about:
