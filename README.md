@@ -15,8 +15,7 @@ Currently working:
     -finish parse_line to remove the need to a bunch of parsers
     -return a Definition
         -Add async / export flags to the definition struct
-Finders:
-    Make other finders use parse_line
+    -See about command line flags
 ```
 Ideas:
 ```
@@ -35,8 +34,6 @@ Interfacing
 Parsing
     -Add support for export and async?
         -Possible new parts of Definition type that specify it is an export or async
-    -Line parser
-        -Sort the line into a tree structure?
     -Parse files until we find 'function ____()'
         -Start with functions defined by 'function'
         -See later about:
