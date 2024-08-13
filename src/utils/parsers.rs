@@ -1,4 +1,4 @@
-use clap::{builder::Str, Arg, Command};
+use clap::{builder::Str, Arg, ArgAction, Command};
 
 use super::types::Definition;
 
@@ -14,7 +14,8 @@ pub struct CliParser {
     pub filename: Option<String>,
     pub function: Option<String>,
     pub directory: Option<String>,
-    pub show_type: Option<String>
+    pub show_type: Option<String>,
+    pub recursive_flag: bool
 }
 
 impl CliParser {
@@ -43,6 +44,13 @@ impl CliParser {
                         .help("Choose a directory to search for search type.")
                 )
                 .arg(
+                    Arg::new("recursive_flag")
+                        .short('r')
+                        .long("recursive flag")
+                        .action(ArgAction::SetTrue)
+                        .help("Specify whether or not to recursively search a directory")
+                )
+                .arg(
                     Arg::new("type")
                         .short('t')
                         .long("type")
@@ -54,7 +62,8 @@ impl CliParser {
             filename: None,
             function: None,
             directory: None,
-            show_type: None
+            show_type: None,
+            recursive_flag: false
         }
     }
 }
@@ -162,15 +171,12 @@ pub fn parse_line(line: &str, idx: u16, filename: &str) -> Option<Definition> {
         return None;
     }
 
+    //split the line by the term 'function'
     let function_split: Vec<&str> = line.split("function")
         .into_iter()
         .collect();
 
-    // //function_split[0] will be empty if no text comes before 'function'
-    // if function_split[0].is_empty() {
-    //     dbg!("function is the first word");
-    //     // return Some (();
-    // }
+    //one entry means 
     if function_split.len() == 1 {
         //check for arrow function here?
         if line.contains("=>") {
@@ -212,7 +218,7 @@ pub fn parse_line(line: &str, idx: u16, filename: &str) -> Option<Definition> {
         return Some (Definition {
             content: String::from(content),
             name: String::from(signature),
-            idx: idx,
+            idx,
             params: parse_params(line),
             filename: String::from(filename)
         })
