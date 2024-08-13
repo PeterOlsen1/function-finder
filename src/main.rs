@@ -2,7 +2,7 @@ mod finders;
 mod utils;
 
 use std::io::Result;
-use finders::{find_all_definitions, find_all_directory::{self, find_all_directory, find_all_directory_rec}, show_single};
+use finders::{find_all_definitions, find_all_directory::{find_def_directory, find_def_directory_rec}, show_single};
 use utils::parsers::{CliParser, parse_line};
 
 
@@ -32,10 +32,17 @@ fn main() -> Result<()> {
     } else {
         cli_parser.directory = None;
     }
+
+    //recursive flag
+    if let Some(recursive_flag) = matches.get_one::<bool>("recursive_flag") {
+        dbg!("Hello!");
+    } else {
+        cli_parser.directory = None;
+    }
     
     // let result = parse_line("OOK_AT_ME(HELLO, LOOK, HERE, HI) {", 1, "./testfiles/folder/superfolder/woah.js");
-    let result = parse_line("function LOOK_AT_ME(HELLO, LOOK, HERE, HI) {", 1, "./testfiles/folder/superfolder/woah.js");
-    let result = parse_line("async function LOOK_AT_ME(HELLO, LOOK, HERE, HI) {", 1, "./testfiles/folder/superfolder/woah.js");
+    // let result = parse_line("function LOOK_AT_ME(HELLO, LOOK, HERE, HI) {", 1, "./testfiles/folder/superfolder/woah.js");
+    // let result = parse_line("async function LOOK_AT_ME(HELLO, LOOK, HERE, HI) {", 1, "./testfiles/folder/superfolder/woah.js");
     // dbg!(result);
 
 
