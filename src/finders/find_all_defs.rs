@@ -8,7 +8,7 @@
 
 
 use crate::utils::types::Definition;
-use crate::utils::parsers::{parse_name, parse_params, parse_valid_function};
+use crate::utils::parsers::{parse_name, parse_params, parse_valid_function, parse_line};
 use std::fs;
 use std::io::{self, BufRead, Result};
 
@@ -59,22 +59,11 @@ pub fn all_definitions(filename: &str) -> Option<Vec<Definition>> {
         i += 1;
         //get the line string and check if it contains a function
         let line = line.ok()?;
-        if parse_valid_function(&line) {
-            //gather parts of the line
-            let parts: Vec<&str> = line
-                .split("function")
-                .collect();
-            let replaced = parts[1]
-                .replace("{", "");
 
-            //push to defs
-            defs.push(Definition {
-                content:  String::from(replaced.trim()),
-                name: parse_name(&line),
-                idx: i,
-                params: parse_params(&line),
-                filename: String::from(&path)
-            });
+        //parse the line
+        match parse_line(&line, i, &path) {
+            Some(def) => defs.push(def),
+            None => continue
         }
     }
 

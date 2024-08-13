@@ -1,5 +1,5 @@
 use crate::utils::types::{Call, Definition};
-use crate::utils::parsers::{parse_name, parse_params, parse_valid_function};
+use crate::utils::parsers::{parse_name, parse_params, parse_valid_function, parse_line};
 use std::fs;
 use std::io::{self, BufRead, Result};
 
@@ -52,7 +52,7 @@ pub fn show_single(filename: &str, name: &str) -> Result<()> {
 }
 
 
-fn read_single_function(filename : &str, name: &str) -> Option<(Vec<Definition>, Vec<Call>)> {
+pub fn read_single_function(filename : &str, name: &str) -> Option<(Vec<Definition>, Vec<Call>)> {
     //get the filename and open file
     let path = format!("./testfiles/{}", filename);
     let f = fs::File::open(&path).ok()?;
@@ -71,31 +71,18 @@ fn read_single_function(filename : &str, name: &str) -> Option<(Vec<Definition>,
 
         //parse the line
         if has_function(line, name) {
-            if parse_valid_function(&line) {
-                //gather parts of the line
-                let parts: Vec<&str> = line
-                    .split("function")
-                    .collect();
-                let replaced = parts[1]
-                    .replace("{", "");
-                let definition = replaced.trim();
-
-                defs.push(Definition {
-                    content:  String::from(replaced.trim()),
-                    name: parse_name(definition),
-                    idx: i,
-                    params: parse_params(definition),
-                    filename: String::from(&path)
-                });
+            match parse_line(&line, i, filename) {
+                Some(def) => defs.push(def),
+                None => continue,
             }
-            else if !line.contains("//") {
-                //push the line to our store of lines
-                lines.push(Call {
-                    filename : String::from(&path),
-                    content: String::from(line),
-                    idx: i
-                });
-            }
+        }
+        else if !line.contains("//") {
+            //push the line to our store of lines
+            lines.push(Call {
+                filename : String::from(&path),
+                content: String::from(line),
+                idx: i
+            });
         }
     }
 
