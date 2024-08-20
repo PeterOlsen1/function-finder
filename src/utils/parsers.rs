@@ -204,7 +204,6 @@ pub fn parse_line(line: &str, idx: u16, filename: &str) -> Option<Definition> {
             export_flag = true;
         }
 
-        dbg!(&function_split[1]);
         let content = function_split[1]
             .replace("{", "");
         let content = content
