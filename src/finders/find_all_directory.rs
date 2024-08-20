@@ -19,6 +19,13 @@ use crate::finders::all_definitions;
 use super::find_single::read_single_function;
 
 
+/**
+ * THIS IS THE NON-RECURSIVE VERSION
+ * This function will find all of the function definitions in a given directory.
+ * This function makes use of multithreading for quicker file I/O.
+ * @param directory {&str} the directory to search
+ * @return {Option<HashMap<String, Vec<Definition>>>} An option that holds a hashmap that uses filenames as keys and definitions vectors as values
+ */
 pub fn find_def_directory(directory: &str) -> Option<HashMap<String, Vec<Definition>>> {
     //define the path, get the files, and define output hash map
     let files = fs::read_dir(directory);
@@ -71,10 +78,13 @@ pub fn find_def_directory(directory: &str) -> Option<HashMap<String, Vec<Definit
     }
 }
 
+
 /**
- * Same as find_def_directory but recursively looks in all directories
- * 
- * Spawns a thread for each process, too many threads?
+ * THIS FUNCTION IS THE RECURSIVE VERSION
+ * This function will find all of the function definitions in a given directory.
+ * This function makes use of multithreading for quicker file I/O.
+ * @param directory {&str} the directory to search
+ * @return {Option<HashMap<String, Vec<Definition>>>} An option that holds a hashmap that uses filenames as keys and definitions vectors as values
  */
 pub fn find_def_directory_rec(directory: &str) -> Option<HashMap<String, Vec<Definition>>> {
     //define the path, get the files, and define output hash map
@@ -145,7 +155,13 @@ pub fn find_def_directory_rec(directory: &str) -> Option<HashMap<String, Vec<Def
 //Directory finders
 
 
-
+/**
+ * THIS IS THE NON-RECURSIVE VERSION
+ * Finds all occurences of some function in a directory
+ * @param directory {&str} The given directory to search
+ * @param function {&str} the function we want to find all occurences of
+ * @return {Option<HashMap<String, Vec<Call>>>} A hashmap where keys are filenames and values are Call vecs
+ */
 pub fn find_call_directory(directory: &str, function: &str) -> Option<HashMap<String, Vec<Call>>> {
     //define the path, get the files, and define output hash map
     let files = fs::read_dir(directory);
@@ -208,6 +224,14 @@ pub fn find_call_directory(directory: &str, function: &str) -> Option<HashMap<St
     }
 }
 
+
+/**
+ * THIS IS THE RECURSIVE VERSION
+ * Finds all occurences of some function in a directory
+ * @param directory {&str} The given directory to search
+ * @param function {&str} the function we want to find all occurences of
+ * @return {Option<HashMap<String, Vec<Call>>>} A hashmap where keys are filenames and values are Call vecs
+ */
 pub fn find_call_directory_rec(directory: &str, function: &str) -> Option<HashMap<String, Vec<Call>>> {
     //define the path, get the files, and define output hash map
     let files = fs::read_dir(directory);
