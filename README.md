@@ -12,10 +12,10 @@ New Parsers:
     -Parser to find all in a directory / subdirectories
         -How do we want to display it?
 Currently working:
-    -finish parse_line to remove the need to a bunch of parsers
-    -return a Definition
-        -Add async / export flags to the definition struct
-    -See about command line flags
+    -add displayers module to display information about results?
+    -do we want to add this information to a file?
+        -results.txt
+    -do we want support for the display flag in the CLIParser?
 ```
 Ideas:
 ```
@@ -32,13 +32,12 @@ Interfacing
         -If the function name is close to one found, do stuff?
             -This may be harder
 Parsing
-    -Add support for export and async?
-        -Possible new parts of Definition type that specify it is an export or async
     -Parse files until we find 'function ____()'
         -Start with functions defined by 'function'
         -See later about:
             -Functions contained inside other functions
                 -Hold all lines of a file in some vector
+                    -This would be better if we are going back in lines
                 -Parse lines of the vector to reduce fileIO?
                     -This might be a little slow / memory intense depending on size of files
             -Arrow functions assigned to values
