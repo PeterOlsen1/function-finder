@@ -3,6 +3,7 @@ use crate::utils::parsers::{parse_name, parse_params, parse_valid_function, pars
 use std::fs;
 use std::io::{self, BufRead, Result};
 
+
 /**
  * @purpose - Calls read_single_function and then displays the results accordingly.
  */
@@ -52,6 +53,13 @@ pub fn show_single(filename: &str, name: &str) -> Result<()> {
 }
 
 
+/**
+ * Given a file and function name, search the given file for all occurences of said function.
+ * @param filename {&str} the file we want to search
+ * @param name {&str} the function we want to search for
+ * @return {Option<(Vec<Definition>, Vec<Call>)>} A tuple containing vecs of all definitions and calls in a file.
+ *      *the definition vector is included so that if for some reason a function is defined multiple times, it will be caught
+ */
 pub fn read_single_function(filename : &str, name: &str) -> Option<(Vec<Definition>, Vec<Call>)> {
     //get the filename and open file
     let path = format!("./testfiles/{}", filename);
