@@ -47,8 +47,7 @@ impl CliParser {
                     Arg::new("recursive_flag")
                         .short('r')
                         .long("recursive flag")
-                        .action(ArgAction::SetTrue)
-                        .help("Specify whether or not to recursively search a directory")
+                        .help("Specify whether or not to recursively search a directory.\nEnabled by default.")
                 )
                 .arg(
                     Arg::new("type")
@@ -213,17 +212,15 @@ pub fn parse_line(line: &str, idx: u16, filename: &str) -> Option<Definition> {
 
         let first_parenthesis = content.find('(').unwrap();
         let signature = &content[0..first_parenthesis];
-        let params = &content[first_parenthesis..content.len()];
 
         return Some (Definition {
             content: String::from(content),
             name: String::from(signature),
             idx,
             params: parse_params(line),
-            filename: String::from(filename)
-        })
+            filename: String::from(filename),
+            async_flag,
+            export_flag
+        });
     } 
-
-
-    None
 }
