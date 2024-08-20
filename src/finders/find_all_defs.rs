@@ -12,6 +12,12 @@ use crate::utils::parsers::{parse_name, parse_params, parse_valid_function, pars
 use std::fs;
 use std::io::{self, BufRead, Result};
 
+/**
+ * This function will find all definitions located inside of the given file.
+ * It will also print stats about each function definition. If you want to find defs but not print, consider calling all_definitions.
+ * 
+ * @param filename {&str} the path of the file we want to search
+ */
 pub fn find_all_definitions(filename: &str) -> Result<()> {
     let result = all_definitions(filename);
     println!("===== RESULTS OF find_all_definitions IN {} =====", filename);
@@ -45,9 +51,17 @@ pub fn find_all_definitions(filename: &str) -> Result<()> {
     Ok (())
 }
 
+
+
+/**
+ * Finds all function definitions in a given file.
+ * Unlinke find_all_defs, this function will not print stats. (it is essentially the engine of its coutnerpart)
+ * @param: filename {&str} the path of the file we want to parse.
+ * @returns {Option<Vec<Definition>>} returns either a vector of all definitions, or None
+ */
 pub fn all_definitions(filename: &str) -> Option<Vec<Definition>> {
     //get path and open file
-    let path = format!("{}", filename);
+    let path = String::from(filename);
     let f = fs::File::open(&path).ok()?;
     
     //initialize file reader, increment variable, and line store
