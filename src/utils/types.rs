@@ -1,7 +1,7 @@
 use std::collections::VecDeque;
 
 /**
- * Type to store function calls
+ * Type to store data about function calls
  */
 pub struct Call {
     pub filename: String,
@@ -10,7 +10,7 @@ pub struct Call {
 }
 
 /**
- * Type to store function definitions
+ * Type to store data about function definitions
  */
 #[derive(Debug)]
 pub struct Definition {
@@ -18,7 +18,9 @@ pub struct Definition {
     pub name: String,
     pub idx: u16,
     pub params: Vec<String>,
-    pub filename: String
+    pub filename: String,
+    pub async_flag: bool,
+    pub export_flag: bool
 }
 
 //use this queue later to find {} corresponding to a function?
