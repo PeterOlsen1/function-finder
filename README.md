@@ -1,17 +1,15 @@
 # function-finder! 🔎🔎🔎
 
-This repo is my first attempt at rust. 🦀
+This repo is my first attempt at a rust project. 🦀
 
-In my job over the summer, I find it hard to keep track of where all my functions are called, so I'm taking it upon myself to create some sort of executeable / extension that will find all times a function is called, and display information about them. Not entirely sure yet how this will be executed or how far I will go with it, but the project is still in its infancy.
+In my job over the summer, I found it hard to keep track of where all my functions are called, so I'm taking it upon myself to create some sort of executeable / extension that will find all times a function is called, and display information about them. Not entirely sure yet how this will be executed or how far I will go with it, but the project is still in its infancy.
 
 TODO:
 ```
 New Parsers:
-    -Parser to find all function calls in a file (regardless of where it was defined)
-        -Or do we want it to only find functions defined in the scope of the parser?
-    -Parser to find all in a directory / subdirectories
-        -How do we want to display it?
+    -Parse params, take into account multiple parenthesis? (use a stack to figure out when the params end)
 Currently working:
+    -Keep all lines in a vector to easily display context around a function?
     -add displayers module to display information about results?
         -already finished display_hash for Definition hash tables
             -write display_hash for Calls
