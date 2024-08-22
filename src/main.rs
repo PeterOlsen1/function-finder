@@ -4,9 +4,9 @@ mod displays;
 
 use std::io::Result;
 use finders::{
-    all_definitions, find_all_definitions, find_all_directory::{find_call_directory, find_call_directory_rec, find_def_directory, find_def_directory_rec
-    }, find_single::read_single_function, show_single};
-use utils::parsers::{CliParser, parse_line};
+    all_definitions, find_all_directory::{find_call_directory, find_call_directory_rec, find_def_directory, find_def_directory_rec
+    }, find_single::read_single_function};
+// use utils::parsers::{CliParser, parse_line};
 use displays::display::display_hash;
 
 
