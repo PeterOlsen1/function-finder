@@ -1,5 +1,5 @@
 use crate::utils::types::{Call, Definition};
-use crate::utils::parsers::parse_line;
+use crate::utils::parsers::{parse_call, parse_def};
 use std::fs;
 use std::io::{self, BufRead, Result};
 
@@ -68,7 +68,7 @@ pub fn read_single_function(filename : &str, name: &str) -> Option<(Vec<Definiti
     //initialize file reader, increment variable, and line store
     let reader = io::BufReader::new(f);
     let mut i: u16 = 0;
-    let mut lines: Vec<Call> = Vec::new();
+    let mut calls: Vec<Call> = Vec::new();
     let mut defs: Vec<Definition> = Vec::new();
 
     //loop through the lines of the given file
@@ -79,23 +79,21 @@ pub fn read_single_function(filename : &str, name: &str) -> Option<(Vec<Definiti
 
         //parse the line
         if has_function(line, name) {
-            match parse_line(&line, i, filename) {
+            match parse_def(&line, i, filename) {
                 Some(def) => defs.push(def),
-                None => continue,
+                None => continue
             }
         }
-        else if !line.contains("//") {
-            //push the line to our store of lines
-            lines.push(Call {
-                filename : String::from(&path),
-                content: String::from(line),
-                idx: i
-            });
+        else {
+            match parse_call(&name, &line, i, &filename) {
+                Some(call) => calls.push(call),
+                None => continue
+            }
         }
     }
 
     //set the components of result and return it
-    Some((defs, lines))
+    Some((defs, calls))
 }
 
 //function to parse a line, maybe return a line option?
