@@ -8,7 +8,7 @@
 
 
 use crate::utils::types::Definition;
-use crate::utils::parsers::parse_line;
+use crate::utils::parsers::parse_def;
 use std::fs;
 use std::io::{self, BufRead, Result};
 
@@ -75,7 +75,7 @@ pub fn all_definitions(filename: &str) -> Option<Vec<Definition>> {
         let line = line.ok()?;
 
         //parse the line
-        match parse_line(&line, i, &path) {
+        match parse_def(&line, i, &path) {
             Some(def) => defs.push(def),
             None => continue
         }

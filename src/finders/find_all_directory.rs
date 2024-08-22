@@ -152,7 +152,7 @@ pub fn find_def_directory_rec(directory: &str) -> Option<HashMap<String, Vec<Def
 
 
 //========================================================================================
-//Directory finders
+//Directory finders for function CALLS
 
 
 /**
