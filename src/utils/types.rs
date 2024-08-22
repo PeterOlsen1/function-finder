@@ -3,10 +3,13 @@ use std::collections::VecDeque;
 /**
  * Type to store data about function calls
  */
+#[derive(Debug)]
 pub struct Call {
     pub filename: String,
     pub content: String,
-    pub idx: u16
+    pub idx: u16,
+    pub params: Vec<String>,
+    pub await_flag: bool
 }
 
 /**
