@@ -13,6 +13,9 @@ New Parsers:
         -How do we want to display it?
 Currently working:
     -add displayers module to display information about results?
+        -already finished display_hash for Definition hash tables
+            -write display_hash for Calls
+            -write display for call and def arrays
     -do we want to add this information to a file?
         -results.txt
     -do we want support for the display flag in the CLIParser?
