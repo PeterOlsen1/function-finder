@@ -1,11 +1,13 @@
 mod finders;
 mod utils;
+mod displays;
 
 use std::io::Result;
 use finders::{
     all_definitions, find_all_definitions, find_all_directory::{find_call_directory, find_call_directory_rec, find_def_directory, find_def_directory_rec
     }, find_single::read_single_function, show_single};
 use utils::parsers::{CliParser, parse_line};
+use displays::display::display_hash;
 
 
 fn main() -> Result<()> {
@@ -39,8 +41,13 @@ fn main() -> Result<()> {
     }
 
     //recursive flag
-    if matches.get_one::<String>("recursive_flag").unwrap() != "" {
-        cli_parser.recursive_flag = false;
+    if let Some(flag) = matches.get_one::<String>("recursive_flag") {
+        if flag != "" {
+            cli_parser.recursive_flag = false;
+        }
+        else {
+            cli_parser.recursive_flag = true;
+        }
     } 
     else {
         cli_parser.recursive_flag = true;
@@ -52,10 +59,11 @@ fn main() -> Result<()> {
     if cli_parser.directory != None && cli_parser.recursive_flag {
         //did they ask for a specific function
         if cli_parser.function != None {
-            find_call_directory_rec(&cli_parser.directory.unwrap(), &cli_parser.function.unwrap());
+            let result = find_call_directory_rec(&cli_parser.directory.unwrap(), &cli_parser.function.unwrap());
         }
         else {
-            find_def_directory_rec(&cli_parser.directory.unwrap());
+            let result = find_def_directory_rec(&cli_parser.directory.unwrap());
+            display_hash(result);
         }
     }
     //user specified directory but no recursive flag
@@ -65,7 +73,8 @@ fn main() -> Result<()> {
             find_call_directory(&cli_parser.directory.unwrap(), &cli_parser.function.unwrap());
         }
         else {
-            find_def_directory(&cli_parser.directory.unwrap());
+            let result = find_def_directory(&cli_parser.directory.unwrap());
+            display_hash(result);
         }
     }
     //the user asked for a filename
@@ -89,5 +98,9 @@ fn main() -> Result<()> {
     // let result = parse_line("function LOOK_AT_ME(HELLO, LOOK, HERE, HI) {", 1, "./testfiles/folder/superfolder/woah.js");
     // let result = parse_line("async function LOOK_AT_ME(HELLO, LOOK, HERE, HI) {", 1, "./testfiles/folder/superfolder/woah.js");
     // dbg!(result);
+
+    // let result = find_def_directory_rec("./testfiles/");
+    // display_hash(result);
+
     Ok(())
 }
