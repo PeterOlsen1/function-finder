@@ -1,4 +1,4 @@
-use crate::utils::types::Definition;
+use crate::utils::types::{Definition, Call};
 use std::collections::HashMap;
 use std::io::{self, Write, Result};
 
@@ -7,7 +7,7 @@ use std::io::{self, Write, Result};
  * This function is created in order to display a hash table that contains information about function definitions
  * There is user interactivity to display different things about the results
  */
-pub fn display_hash(data: Option<HashMap<String, Vec<Definition>>>) -> Result<()> {
+pub fn display_def_hash(data: Option<HashMap<String, Vec<Definition>>>) -> () {
     //add code here to interactively display information from the hash table. Allow user to interact with it?
     let data = data.unwrap_or_else(HashMap::new);
 
@@ -24,7 +24,7 @@ pub fn display_hash(data: Option<HashMap<String, Vec<Definition>>>) -> Result<()
     
     if files == 0 {
         println!("No data was found.");
-        return Ok(());
+        return ();
     }
 
     println!("\x1b[1m{}\x1b[0m functions found across \x1b[1m{}\x1b[0m files", defs, files);
@@ -45,7 +45,7 @@ pub fn display_hash(data: Option<HashMap<String, Vec<Definition>>>) -> Result<()
         //user wants to exit
         if input == "\n" || input.contains("-quit") || input.contains("-q") {
             println!("Quitting...");
-            return Ok(());
+            return ();
         }
         //view help menu
         else if input.contains("-help") || input.contains("-h") {
@@ -186,3 +186,141 @@ pub fn display_hash(data: Option<HashMap<String, Vec<Definition>>>) -> Result<()
         }
     }
 }
+
+
+// pub fn display_call_hash(data: Option<HashMap<String, Vec<Call>>>) -> () {
+//     let data = data.unwrap_or_else(HashMap::new);
+
+//     let mut input = String::new();
+
+//     //gather the total number of definitions and files parsed
+//     let mut calls = 0;
+//     let mut files = 0;
+//     for (_, call_vec) in &data {
+//         files += 1;
+//         calls += call_vec.len();
+//     }
+//     println!("==== DIRECTORY SEARCH RESULTS ====");
+    
+//     if files == 0 {
+//         println!("No data was found.");
+//         return ();
+//     }
+
+//     println!("\x1b[1m{}\x1b[0m calls found across \x1b[1m{}\x1b[0m files", calls, files);
+//     println!("Type -help for help.");
+
+//     loop {
+//         //clear the def_vec of input
+//         input = String::from("");
+
+//         //prompt the user for new input
+//         print!("Input: ");
+//         io::stdout().flush().unwrap();
+//         io::stdin().read_line(&mut input)
+//             .expect("Unable to read line");
+
+
+//         //user wants to exit
+//         if input == "\n" || input.contains("-quit") || input.contains("-q") {
+//             println!("Quitting...");
+//             return ();
+//         }
+//         //view help menu
+//         else if input.contains("-help") || input.contains("-h") {
+//             println!("==== HELP MENU ====");
+//             println!("Flags         Description");
+//             println!("-all          Displays information about all functions");
+//             println!("-help -h      Displays help menu");
+//             println!("-file -f      Shows information from a single file");
+//             println!("-func -fn     Displays information about an indiviudal function");
+//             // println!("-a            Displays async functions");
+//             // println!("-e            Displays exported functions");
+//             println!("-quit -q ''   Quits the input loop");
+//             println!();
+//             println!("Only one flag can be used at a time.");
+//         }
+
+//         //view all functions
+//         else if input.contains("-all") {
+//             for (key, call_vec) in &data {
+//                 println!();
+//                 println!("==== FILE: {} ====", key);
+
+//                 if call_vec.len() == 0 {
+//                     println!("No functions Called in this file.");
+//                     continue;
+//                 }
+
+//                 for call in call_vec {
+//                     println!("Function name: \x1b[1m{}\x1b[0m", call.name);
+//                     println!("Called on: line \x1b[1m{}\x1b[0m", call.idx);
+//                     println!("Parameters: ({})", call.params.join(", "));
+//                     println!();
+//                 }
+//             }
+//         }
+
+//         //finding a single function
+//         else if input.contains("-func") || input.contains("-fn") {
+//             let mut found = false;
+//             let parts: Vec<&str> = input
+//                 .split_whitespace()
+//                 .collect();
+//             let function_name = parts[1];
+
+//             for (_, call_vec) in &data {
+//                 if found {
+//                     break;
+//                 }
+
+//                 for call in call_vec {
+//                     if found {
+//                         break;
+//                     }
+
+//                     //we find the matching function
+//                     if function_name == call.name {
+//                         found = true;
+//                         println!();
+//                         println!("Function found!");
+//                         println!("Called on: line \x1b[1m{}\x1b[0m in file \x1b[1m{}\x1b[0m", call.idx, call.filename);
+//                         println!("Parameters: ({})", call.params.join(", "));
+//                     }
+//                 }
+//             }
+
+//             if !found {
+//                 println!();
+//                 println!("No function with the name \x1b[1m{}\x1b[0m found", function_name);
+//             }
+//         }
+
+//         //functions in a single file
+//         else if input.contains("-f") || input.contains("-file") {
+//             let mut found = false;
+//             let parts: Vec<&str> = input
+//                 .split_whitespace()
+//                 .collect();
+//             let file_name = parts[1];
+
+//             for (key, call_vec) in &data {
+//                 if key.contains(file_name) {
+//                     found = true;
+//                     println!("==== RESULTS FOR FILE {} ====", file_name);
+//                     for call in call_vec {
+//                         println!("Called on: line \x1b[1m{}\x1b[0m", call.idx);
+//                         println!("Context: {}", call.content);
+//                         println!();
+//                     }
+//                 }
+//             }
+
+//             //no results
+//             if !found {
+//                 println!();
+//                 println!("No file with the name {} found", file_name);
+//             }
+//         }
+//     }
+// }
