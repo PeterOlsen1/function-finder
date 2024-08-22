@@ -6,8 +6,8 @@ use std::io::Result;
 use finders::{
     all_definitions, find_all_directory::{find_call_directory, find_call_directory_rec, find_def_directory, find_def_directory_rec
     }, find_single::read_single_function};
-// use utils::parsers::{CliParser, parse_line};
-use displays::display::display_hash;
+// use utils::parsers::{CliParser, parse_def};
+use displays::display::display_def_hash;
 
 
 fn main() -> Result<()> {
@@ -63,7 +63,7 @@ fn main() -> Result<()> {
         }
         else {
             let result = find_def_directory_rec(&cli_parser.directory.unwrap());
-            display_hash(result);
+            display_def_hash(result);
         }
     }
     //user specified directory but no recursive flag
@@ -74,7 +74,7 @@ fn main() -> Result<()> {
         }
         else {
             let result = find_def_directory(&cli_parser.directory.unwrap());
-            display_hash(result);
+            display_def_hash(result);
         }
     }
     //the user asked for a filename
@@ -94,13 +94,13 @@ fn main() -> Result<()> {
 
 
 
-    // let result = parse_line("OOK_AT_ME(HELLO, LOOK, HERE, HI) {", 1, "./testfiles/folder/superfolder/woah.js");
-    // let result = parse_line("function LOOK_AT_ME(HELLO, LOOK, HERE, HI) {", 1, "./testfiles/folder/superfolder/woah.js");
-    // let result = parse_line("async function LOOK_AT_ME(HELLO, LOOK, HERE, HI) {", 1, "./testfiles/folder/superfolder/woah.js");
+    // let result = parse_def("OOK_AT_ME(HELLO, LOOK, HERE, HI) {", 1, "./testfiles/folder/superfolder/woah.js");
+    // let result = parse_def("function LOOK_AT_ME(HELLO, LOOK, HERE, HI) {", 1, "./testfiles/folder/superfolder/woah.js");
+    // let result = parse_def("async function LOOK_AT_ME(HELLO, LOOK, HERE, HI) {", 1, "./testfiles/folder/superfolder/woah.js");
     // dbg!(result);
 
     // let result = find_def_directory_rec("./testfiles/");
-    // display_hash(result);
+    // display_def_hash(result);
 
     Ok(())
 }
