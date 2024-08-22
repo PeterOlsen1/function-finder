@@ -78,10 +78,19 @@ impl CliParser {
  */
 pub fn parse_params(line: &str) -> Vec<String> {
     //extract function signature from the line
-    let line_split: Vec<&str> = line.split("function")
+    let mut function_split: Vec<&str> = line.split("function")
         .into_iter()
         .collect();
-    let signature = line_split[1];
+
+    //if the word 'function' is contained in the function name, join them together
+    let joined;
+    if function_split.len() > 2 {
+        let rest = &function_split[1..];
+        joined = rest.join("");
+        function_split[1] = &joined;
+    }
+
+    let signature = function_split[1];
 
     //find the parenthesis
     let first_parenthesis = signature
@@ -171,11 +180,12 @@ pub fn parse_line(line: &str, idx: u16, filename: &str) -> Option<Definition> {
     }
 
     //split the line by the term 'function'
-    let function_split: Vec<&str> = line.split("function")
+    let mut function_split: Vec<&str> = line.split("function")
         .into_iter()
         .collect();
 
-    //one entry means 
+
+    //one entry means no explicit function defined
     if function_split.len() == 1 {
         //check for arrow function here?
         if line.contains("=>") {
@@ -204,13 +214,23 @@ pub fn parse_line(line: &str, idx: u16, filename: &str) -> Option<Definition> {
             export_flag = true;
         }
 
+        //if the word 'function' is contained in the function name, join them together
+        let joined;
+        if function_split.len() > 2 {
+            let rest = &function_split[1..];
+            joined = rest.join("");
+            function_split[1] = &joined;
+        }
+
         let content = function_split[1]
             .replace("{", "");
         let content = content
             .trim();
 
-        let first_parenthesis = content.find('(').unwrap();
-        let signature = &content[0..first_parenthesis];
+        let signature = match content.find('(') {
+            Some(idx) => &content[0..idx],
+            None => ""
+        };
 
         return Some (Definition {
             content: String::from(content),
