@@ -1,5 +1,5 @@
 use crate::utils::types::{Call, Definition};
-use crate::utils::parsers::{parse_name, parse_params, parse_valid_function, parse_line};
+use crate::utils::parsers::parse_line;
 use std::fs;
 use std::io::{self, BufRead, Result};
 
