@@ -1,6 +1,6 @@
 use clap::{Arg, Command};
 
-use super::types::Definition;
+use super::types::{Call, Definition};
 
 /**
  * The purpose of this module is to provide single line parsers to extract data 
@@ -174,7 +174,7 @@ pub fn parse_valid_function(line: &str) -> bool {
  * Worst case O(n)
  *      -We have to split the line and parse it
  */
-pub fn parse_line(line: &str, idx: u16, filename: &str) -> Option<Definition> {
+pub fn parse_def(line: &str, idx: u16, filename: &str) -> Option<Definition> {
     if line.len() < 8 || line.starts_with('*') || line.starts_with("//") {
         return None;
     }
@@ -242,4 +242,34 @@ pub fn parse_line(line: &str, idx: u16, filename: &str) -> Option<Definition> {
             export_flag
         });
     } 
+}
+
+
+/**
+ * Function to parse a line for a function call, given the name of a function.
+ * 
+ * It will return a new call object
+ */
+pub fn parse_call(fn_name: &str, line: &str, idx: u16, filename: &str) -> Option<Call> {
+    if line.len() < (fn_name.len()  + 2) || line.starts_with('*') || line.starts_with("//")  || !line.contains(fn_name) {
+        return None;
+    }
+    
+    if line.contains(fn_name) {
+        let mut await_flag = false;
+
+        if line.contains("await") {
+            await_flag = true;
+        }
+
+        return Some(Call {
+            filename: String::from(filename),
+            content: String::from(line),
+            idx,
+            params: parse_params(line),
+            await_flag
+        })
+    }
+
+    None
 }
