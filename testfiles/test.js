@@ -70,3 +70,5 @@ function main() {
 
 // Call the main function to execute the program
 main();
+
+hello();

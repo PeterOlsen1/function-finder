@@ -12,3 +12,9 @@ window.addEventListener('keydown', (evnet) => {
 
 'function dont_parse_this_either(a, b, c, d, e, f)';
 "function no_parsing(x, y, z)";
+
+export function hello() {
+    console.log('hello')
+}
+
+hello();

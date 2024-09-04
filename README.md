@@ -6,17 +6,12 @@ In my job over the summer, I found it hard to keep track of where all my functio
 
 TODO:
 ```
-New Parsers:
-    -Parse params, take into account multiple parenthesis? (use a stack to figure out when the params end)
 Currently working:
-    -Keep all lines in a vector to easily display context around a function?
+    -debug function call parsing
     -add displayers module to display information about results?
         -already finished display_hash for Definition hash tables
             -write display_hash for Calls
             -write display for call and def arrays
-    -do we want to add this information to a file?
-        -results.txt
-    -do we want support for the display flag in the CLIParser?
 ```
 Ideas:
 ```
