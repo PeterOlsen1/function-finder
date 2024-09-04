@@ -46,18 +46,18 @@ impl CliParser {
                 .arg(
                     Arg::new("recursive_flag")
                         .short('r')
-                        .long("recursive flag")
+                        .long("recursive")
                         .help("Specify whether or not to recursively search a directory.\nEnabled by default.")
-                )
-                .arg(
-                    Arg::new("type")
-                        .short('t')
-                        .long("type")
-                        .help("Choose a type to display results for:
-    A / ALL: Show function declarations and calls (default)
-    F / FUNCTIONS: Show function declarations
-    C / CALLS: Show only function calls")
                 ),
+                // .arg(
+    //                 Arg::new("type")
+    //                     .short('t')
+    //                     .long("type")
+    //                     .help("Choose a type to display results for:
+    // A / ALL: Show function declarations and calls (default)
+    // F / FUNCTIONS: Show function declarations
+    // C / CALLS: Show only function calls")
+    //             ),
             filename: None,
             function: None,
             directory: None,
@@ -188,9 +188,9 @@ pub fn parse_def(line: &str, idx: u16, filename: &str) -> Option<Definition> {
     //one entry means no explicit function defined
     if function_split.len() == 1 {
         //check for arrow function here?
-        if line.contains("=>") {
-            dbg!("Arrow function detected!");
-        }
+        // if line.contains("=>") {
+        //     dbg!("Arrow function detected!");
+        // }
         return None;
     }
     else {
