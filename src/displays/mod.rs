@@ -1,1 +1,1 @@
-pub mod display;
+pub mod hash_displays;
