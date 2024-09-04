@@ -4,10 +4,17 @@ mod displays;
 
 use std::io::Result;
 use finders::{
-    all_definitions, find_all_directory::{find_call_directory, find_call_directory_rec, find_def_directory, find_def_directory_rec
-    }, find_single::read_single_function};
-// use utils::parsers::{CliParser, parse_def};
-use displays::display::display_def_hash;
+    all_definitions, 
+    find_all_directory::{
+        find_call_directory, find_call_directory_rec, find_def_directory, find_def_directory_rec
+    }, 
+    find_single::read_single_function
+};
+
+use displays::hash_displays::{
+    display_def_hash,
+    display_call_hash
+};
 
 
 fn main() -> Result<()> {
@@ -60,6 +67,7 @@ fn main() -> Result<()> {
         //did they ask for a specific function
         if cli_parser.function != None {
             let result = find_call_directory_rec(&cli_parser.directory.unwrap(), &cli_parser.function.unwrap());
+            display_call_hash(result);
         }
         else {
             let result = find_def_directory_rec(&cli_parser.directory.unwrap());
@@ -70,7 +78,8 @@ fn main() -> Result<()> {
     else if cli_parser.directory != None {
         //again, ask for a specific function?
         if cli_parser.function != None {
-            find_call_directory(&cli_parser.directory.unwrap(), &cli_parser.function.unwrap());
+            let result = find_call_directory(&cli_parser.directory.unwrap(), &cli_parser.function.unwrap());
+            display_call_hash(result);
         }
         else {
             let result = find_def_directory(&cli_parser.directory.unwrap());
@@ -89,7 +98,7 @@ fn main() -> Result<()> {
         }
     }
     else {
-        println!("Inputs not recognized, unable to perform finding operation.");
+        println!("Inputs not recognized, unable to perform finding operation. Type -help for help menu.");
     }
 
 
